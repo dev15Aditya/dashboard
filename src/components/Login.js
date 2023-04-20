@@ -8,15 +8,43 @@ const logo =
 const label = 'text-[#000000] text-[16px]';
 const labelForm = 'bg-[#F5F5F5] rounded-[10px] p-[10px] h-[40px]';
 
-export default function Login(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Login({ onLogin }) {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const dummyUser = [
+    {
+      name: 'Aditya Raj',
+      email: 'aditya@gmail.com',
+      password: '12345',
+    },
+    {
+      name: 'Akshay Kumar',
+      email: 'akshay@gmail.com',
+      password: '54321',
+    },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
-  };
 
+    // validating user credentials
+    const authenticatedUser = dummyUser.find(
+      (user) =>
+        user.email === formData.email && user.password === formData.password
+    );
+
+    // give alert if wrong credential
+    if (!authenticatedUser) {
+      alert('Wrong credentials');
+    }
+
+    if (authenticatedUser) {
+      onLogin(authenticatedUser);
+    }
+  };
   return (
     <div className={main}>
       <div className="bg-[#000000] lg:w-[40%]">
@@ -48,8 +76,10 @@ export default function Login(props) {
               Email Address
             </label>
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               type="email"
               className={labelForm}
             />
@@ -57,8 +87,10 @@ export default function Login(props) {
               Password
             </label>
             <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               type="password"
               className={labelForm}
             />
@@ -75,7 +107,7 @@ export default function Login(props) {
             </button>
           </form>
 
-          <p className="text-[#858585] text-[16px] text-center">
+          {/* <p className="text-[#858585] text-[16px] text-center">
             Don't have an account?
             <button
               onClick={() => props.onFormSwitch('register')}
@@ -83,7 +115,7 @@ export default function Login(props) {
             >
               Register here
             </button>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

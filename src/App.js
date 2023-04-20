@@ -1,34 +1,31 @@
 import React, { useState } from 'react';
 import Login from './components/Login';
-import Register from './components/Register';
-import Navbar from './components/Navbar';
-import Cards from './components/Cards';
-import Chart from './components/Chart';
-import TopProducts from './components/TopProducts';
-import Schedule from './components/Schedule';
+import Userpanel from './components/Userpanel';
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  const handleLogin = (user) => {
+    setLoggedInUser(user);
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser(null);
   };
 
   return (
-    <div className="bg-[#F5F5F5]">
+    <div className="bg-[#F5F5F5] overflow-hidden">
       {/* {currentForm === 'login' ? (
         <Login onFormSwitch={toggleForm} />
       ) : (
         <Register onFormSwitch={toggleForm} />
       )} */}
-      <Navbar />
-      <Cards />
-      <div className="flex justify-center md:w-[83%] md:ml-[240px] pt-5 pb-2">
-        <Chart />
-      </div>
-      <div className="flex flex-wrap justify-center md:ml-[270px] md:justify-between p-5">
-        <TopProducts />
-        <Schedule />
-      </div>
+
+      {loggedInUser ? (
+        <Userpanel user={loggedInUser} onLogout={handleLogout} />
+      ) : (
+        <Login onLogin={handleLogin} />
+      )}
     </div>
   );
 }
