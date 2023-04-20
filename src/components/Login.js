@@ -8,24 +8,11 @@ const logo =
 const label = 'text-[#000000] text-[16px]';
 const labelForm = 'bg-[#F5F5F5] rounded-[10px] p-[10px] h-[40px]';
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, dummyUser }) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
-  const dummyUser = [
-    {
-      name: 'Aditya Raj',
-      email: 'aditya@gmail.com',
-      password: '12345',
-    },
-    {
-      name: 'Akshay Kumar',
-      email: 'akshay@gmail.com',
-      password: '54321',
-    },
-  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();

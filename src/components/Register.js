@@ -8,14 +8,23 @@ const logo =
 const label = 'text-[#000000] text-[16px]';
 const labelForm = 'bg-[#F5F5F5] rounded-[10px] p-[10px] h-[40px]';
 
-export default function Register(props) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Register({ onRegistration, dummyUser }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, email, password);
+    const newUser = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    dummyUser.push(newUser);
+    onRegistration(newUser);
   };
 
   return (
@@ -45,39 +54,46 @@ export default function Register(props) {
           >
             <p className={label}>Name</p>
             <input
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               type="text"
               className={labelForm}
             />
             <p className={label}>Email Address</p>
             <input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               type="email"
               className={labelForm}
             />
             <p className={label}>Password</p>
             <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  password: e.target.value,
+                })
+              }
               type="password"
               className={labelForm}
             />
 
-            <button className="text-[#FFFFFF] bg-[#000000] font-bold rounded-[10px] h-[40px]">
+            <button
+              type="submit"
+              className="text-[#FFFFFF] bg-[#000000] font-bold rounded-[10px] h-[40px]"
+            >
               Sign Up
             </button>
           </form>
 
           <p className="text-[#858585] text-[16px] text-center">
             Already have an account?
-            <button
-              onClick={() => props.onFormSwitch('login')}
-              className="text-[#346BD4]"
-            >
-              Login here
-            </button>
+            <button className="text-[#346BD4]">Login here</button>
           </p>
         </div>
       </div>

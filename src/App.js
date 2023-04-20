@@ -1,9 +1,24 @@
 import React, { useState } from 'react';
 import Login from './components/Login';
 import Userpanel from './components/Userpanel';
+import Register from './components/Register';
 
 function App() {
+  const dummyUser = [
+    {
+      name: 'Aditya Raj',
+      email: 'aditya@gmail.com',
+      password: '12345',
+    },
+    {
+      name: 'Akshay Kumar',
+      email: 'akshay@gmail.com',
+      password: '54321',
+    },
+  ];
+
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [registeredUser, setRegisteredUser] = useState(null);
 
   const handleLogin = (user) => {
     setLoggedInUser(user);
@@ -11,6 +26,10 @@ function App() {
 
   const handleLogout = () => {
     setLoggedInUser(null);
+  };
+
+  const handleRegistration = (user) => {
+    setRegisteredUser(user);
   };
 
   return (
@@ -23,8 +42,10 @@ function App() {
 
       {loggedInUser ? (
         <Userpanel user={loggedInUser} onLogout={handleLogout} />
+      ) : registeredUser ? (
+        <Login onLogin={handleLogin} dummyUser={dummyUser} />
       ) : (
-        <Login onLogin={handleLogin} />
+        <Register onRegistration={handleRegistration} dummyUser={dummyUser} />
       )}
     </div>
   );
