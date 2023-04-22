@@ -6,9 +6,8 @@ import './index.css';
 
 ReactDOM.render(
   <Auth0Provider
-    // fetch from .env file
-    domain={process.env.REACT_APP_AUTH0_DOMAIN}
-    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+    domain="dev-02bm213l1ur8e5lx.us.auth0.com"
+    clientId="TnF879YlP49OYfRxZMvlbe8ux5xxFYYi"
     redirectUri={window.location.origin}
   >
     <App />
