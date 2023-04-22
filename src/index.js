@@ -6,8 +6,9 @@ import './index.css';
 
 ReactDOM.render(
   <Auth0Provider
-    domain="dev-02bm213l1ur8e5lx.us.auth0.com"
-    clientId="TnF879YlP49OYfRxZMvlbe8ux5xxFYYi"
+    // fetch from .env file
+    domain={process.env.DOMAIN}
+    clientId={process.env.CLIENT_ID}
     authorizationParams={{
       redirect_uri: window.location.origin,
     }}
