@@ -4,8 +4,10 @@ import Cards from './Cards';
 import Chart from './Chart';
 import TopProducts from './TopProducts';
 import Schedule from './Schedule';
+import { useAuth0 } from '@auth0/auth0-react';
 
-export default function Userpanel({ user, onLogout }) {
+export default function Userpanel() {
+  const { logout } = useAuth0();
   return (
     <div>
       <Navbar />
@@ -18,9 +20,13 @@ export default function Userpanel({ user, onLogout }) {
         <Schedule />
       </div>
 
-      <h2>Welcome, {user.name}</h2>
-      <p>Email: {user.email}</p>
-      <button onClick={onLogout}>Logout</button>
+      <button
+        onClick={() =>
+          logout({ logoutParams: { returnTo: window.location.origin } })
+        }
+      >
+        Logout
+      </button>
     </div>
   );
 }

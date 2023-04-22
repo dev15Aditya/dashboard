@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const main = 'bg-[#F5F5F5] h-[100vh] w-full lg:flex lg:justify-between';
 const button =
@@ -8,30 +9,9 @@ const logo =
 const label = 'text-[#000000] text-[16px]';
 const labelForm = 'bg-[#F5F5F5] rounded-[10px] p-[10px] h-[40px]';
 
-export default function Login({ onLogin, dummyUser }) {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+export default function Login() {
+  const { loginWithRedirect } = useAuth0();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // validating user credentials
-    const authenticatedUser = dummyUser.find(
-      (user) =>
-        user.email === formData.email && user.password === formData.password
-    );
-
-    // give alert if wrong credential
-    if (!authenticatedUser) {
-      alert('Wrong credentials');
-    }
-
-    if (authenticatedUser) {
-      onLogin(authenticatedUser);
-    }
-  };
   return (
     <div className={main}>
       <div className="bg-[#000000] lg:w-[40%]">
@@ -45,7 +25,7 @@ export default function Login({ onLogin, dummyUser }) {
           </p>
 
           <div className="flex justify-between">
-            <button className={button}>
+            <button onClick={() => loginWithRedirect()} className={button}>
               <img src="./google.png" alt="google" />
               <p>Sign in with Google</p>
             </button>
@@ -55,54 +35,37 @@ export default function Login({ onLogin, dummyUser }) {
             </button>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col space-y-[10px] bg-[#FFFFFF] p-7 mt-5 rounded-[20px]"
-          >
+          <form className="flex flex-col space-y-[10px] bg-[#FFFFFF] p-7 mt-5 rounded-[20px]">
             <label for="email" className={label} placeholder="email@gmail.com">
               Email Address
             </label>
-            <input
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              type="email"
-              className={labelForm}
-            />
+            <input type="email" className={labelForm} />
             <label for="password" className={label}>
               Password
             </label>
-            <input
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              type="password"
-              className={labelForm}
-            />
+            <input type="password" className={labelForm} />
 
             <a href="/" className="text-[16px] text-[#346BD4]">
               Forgot password?
             </a>
 
             <button
-              type="submit"
+              onClick={() => loginWithRedirect()}
               className="text-[#FFFFFF] bg-[#000000] font-bold rounded-[10px] h-[40px]"
             >
               Sign In
             </button>
           </form>
 
-          {/* <p className="text-[#858585] text-[16px] text-center">
+          <p className="text-[#858585] text-[16px] text-center">
             Don't have an account?
             <button
-              onClick={() => props.onFormSwitch('register')}
+              onClick={() => loginWithRedirect()}
               className="text-[#346BD4]"
             >
               Register here
             </button>
-          </p> */}
+          </p>
         </div>
       </div>
     </div>
