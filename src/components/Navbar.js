@@ -134,7 +134,11 @@ export default function Navbar() {
         </div>
 
         <img className="mx-3" src="/Vector.png" alt="Notifications" />
-        <img src={user.picture} alt="User" />
+        <img
+          className="h-[30px] w-[30px] rounded-full"
+          src={user.picture}
+          alt="User"
+        />
       </div>
     </nav>
   );
