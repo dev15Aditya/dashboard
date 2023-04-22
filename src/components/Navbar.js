@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const closeIcon =
   'w-10 hover:cursor-pointer hover:opacity-80 scale-75 active:scale-100 transition-all md:hidden';
@@ -6,6 +7,8 @@ const menuIcon =
   'w-10 hover:cursor-pointer hover:opacity-80 transition-all md:hidden';
 
 export default function Navbar() {
+  const { user } = useAuth0();
+
   const [open, setOpen] = useState(false);
   const links = [
     {
@@ -34,7 +37,9 @@ export default function Navbar() {
       icon: '/setting_icon.png',
     },
   ];
-
+  if (!user) {
+    return <div>Loading...</div>;
+  }
   const ulStyle = `absolute w-[200px] pl-8 h-[85%] rounded-[20px] bg-[#000000] top-[60px] md:my-auto space-y-5 
   md:space-y-0 md:items-center
   ${open ? 'left-0' : 'left-[-100%]'} 
@@ -129,7 +134,7 @@ export default function Navbar() {
         </div>
 
         <img className="mx-3" src="/Vector.png" alt="Notifications" />
-        <img className="mr-3 lg:mr-[60px]" src="/profile.png" alt="" />
+        <img src={user.picture} alt="User" />
       </div>
     </nav>
   );
