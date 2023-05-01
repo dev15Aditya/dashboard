@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   LineChart,
   Line,
@@ -10,32 +10,32 @@ import {
 } from 'recharts';
 
 export default function Chart() {
-  const data = [
-    {
-      name: 'Week 1',
-      uv: 200,
-      pv: 100,
-      amt: 240,
-    },
-    {
-      name: 'Week 2',
-      uv: 300,
-      pv: 138,
-      amt: 210,
-    },
-    {
-      name: 'Week 3',
-      uv: 200,
-      pv: 100,
-      amt: 2290,
-    },
-    {
-      name: 'Week 4',
-      uv: 270,
-      pv: 308,
-      amt: 200,
-    },
-  ];
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        'https://api.github.com/repos/facebook/react/languages'
+      );
+      const data = await response.json();
+      setData(data);
+    };
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <p>Loading...</p>;
+  }
+
+  const sortedData = Object.entries(data)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+
+  const chartData = sortedData.map(([name, value]) => ({
+    name,
+    value,
+  }));
+
   return (
     <ResponsiveContainer
       className="py-7 w-[500px] bg-[#FFFFFF] rounded-[20px]"
@@ -45,7 +45,7 @@ export default function Chart() {
       <LineChart
         width={1000}
         height={359}
-        data={data}
+        data={chartData}
         margin={{
           top: 5,
           right: 25,
@@ -55,15 +55,17 @@ export default function Chart() {
       >
         <CartesianGrid strokeDasharray="" />
         <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#E9A0A0"
-          activeDot={{ r: 8 }}
+        <YAxis
+          tick={{
+            fontSize: 12,
+            fill: '#333',
+          }}
+          axisLine={{
+            stroke: '#333',
+          }}
         />
-        <Line type="monotone" dataKey="uv" stroke="#9BDD7C" />
+        <Tooltip />
+        <Line type="monotone" dataKey="value" stroke="#E9A0A0" />
       </LineChart>
     </ResponsiveContainer>
   );

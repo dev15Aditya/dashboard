@@ -4,6 +4,7 @@ import Cards from './Cards';
 import Chart from './Chart';
 import TopProducts from './TopProducts';
 import Schedule from './Schedule';
+import CalenderDrop from './CalenderDrop';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Userpanel() {
@@ -12,7 +13,9 @@ export default function Userpanel() {
     <div>
       <Navbar />
       <Cards />
-      <div className="flex justify-center md:w-[83%] md:ml-[240px] pt-5 pb-2">
+      <div className="flex flex-col md:w-[75%] md:ml-[290px] pt-5 pb-2 bg-[#FFFFFF] rounded-[20px]">
+        <p className="text-[18px] font-bold text-[#000000] ml-6">Activities</p>
+        <CalenderDrop />
         <Chart />
       </div>
       <div className="flex flex-wrap justify-center md:ml-[270px] md:justify-between p-5">

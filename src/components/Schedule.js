@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Schedule() {
   return (
-    <div className="bg-[#FFFFFF] w-[450px] h-[226px] rounded-[20px] p-10 mt-5 md:mt-0">
+    <div className="bg-[#FFFFFF] w-[450px] h-[270px] rounded-[20px] p-10 mt-5 md:mt-0">
       <div className="flex justify-between">
         <p className="font-bold text-[18px]">Today's schedule</p>
         <span className="text-[12px] text-[#858585]">See All {`>`}</span>
